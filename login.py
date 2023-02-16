@@ -4,16 +4,18 @@ import sqlite3
 from tkinter import *
 from tkinter import ttk
 
-def login():
- db = sqlite3.connect('Datos')
- c = db.cursor()
-
 def escribir():  
     nombre = caja1.get()
     apellido = caja2.get()
     telefono = caja3.get()
     dni = caja4.get()
     print(nombre,apellido,telefono,dni)
+    bd = sqlite3.connect('login.bd')
+    cur = bd.cursor()
+    sql = 'INSERT OR IGNORE INTO login (Nombre, Apellido, Telefono, Dni) VALUES ("{}", "{}", {}, {});'
+    cur.execute(sql.format(nombre,apellido,telefono,dni))
+    bd.commit()
+    bd.close()
     
 #def leer():
  #   respuesta.get(*)
@@ -40,13 +42,7 @@ Label(ventana, text = "Dni:", bg = "skyblue3").pack()
 caja4 = Entry(ventana, bg = "light blue")
 caja4.pack()
 
-bd = sqlite3.connect('login.bd')
-cur = bd.cursor()
-cur.execute('INSERT OR IGNORE INTO login (Nombre, Apellido, Telefono, Dni) VALUES ("roque", "portillo", "1168231398", "46502154");')	
-
-
-
-lista=["0", "1", "2",]
+lista=["46502154", "47171797",]
 combo = ttk.Combobox(values=lista)
 combo.place(x=130, y=210)
 
