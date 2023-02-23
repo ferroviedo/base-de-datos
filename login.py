@@ -1,6 +1,6 @@
 import tkinter
-import tkinter as tk
 import sqlite3
+import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 
@@ -16,13 +16,15 @@ def escribir():
     bd.close()
     
 def buscar():
-    sql = ('SELECT * FROM login (Nombre, Apellido, Telefono, Dni) WHERE Dni = {}')
-    resp = cur.fetchall()
+    dni = desplegable.get()
+    print(dni)
+    sql = ("SELECT * FROM login WHERE Dni = {}".format(dni))
+    print(sql)
     cur.execute(sql)
+    resp = cur.fetchall()
+    print(resp)
     
-
-
-
+    
 bd = sqlite3.connect('login.bd')
 cur = bd.cursor()    
 cur.execute("SELECT Dni FROM login")
@@ -31,7 +33,6 @@ print(resp)
 
 
 ventana = tkinter.Tk()
-
 ventana.title ("Login")
 ventana.geometry ("450x250+500+250")
 ventana.config(bg = "skyblue3")
@@ -53,8 +54,7 @@ Label(ventana, text = "Dni:", bg = "skyblue3").pack()
 caja4 = Entry(ventana, bg = "light blue")
 caja4.pack()
 
-lista=[]
-combo = ttk.Combobox(values=resp)
-combo.place(x=130, y=210)
+desplegable = ttk.Combobox(values = resp)
+desplegable.place(x=130, y=210)
 
 ventana.mainloop()
