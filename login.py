@@ -10,23 +10,34 @@ def escribir():
     telefono = caja3.get()
     dni = caja4.get()
     print(nombre,apellido,telefono,dni)
-    bd = sqlite3.connect('login.bd')
-    cur = bd.cursor()
     sql = 'INSERT OR IGNORE INTO login (Nombre, Apellido, Telefono, Dni) VALUES ("{}", "{}", {}, {});'
     cur.execute(sql.format(nombre,apellido,telefono,dni))
     bd.commit()
     bd.close()
     
-#def leer():
- #   respuesta.get(*)
+def buscar():
+    sql = ('SELECT * FROM login (Nombre, Apellido, Telefono, Dni) WHERE Dni = {}')
+    resp = cur.fetchall()
+    cur.execute(sql)
     
+
+
+
+bd = sqlite3.connect('login.bd')
+cur = bd.cursor()    
+cur.execute("SELECT Dni FROM login")
+resp = cur.fetchall()
+print(resp)
+
+
 ventana = tkinter.Tk()
+
 ventana.title ("Login")
 ventana.geometry ("450x250+500+250")
 ventana.config(bg = "skyblue3")
 boton = ttk.Button(text="Guardar", command = escribir)
 boton.place(x=245, y=175)
-boton = ttk.Button(text="Buscar")
+boton = ttk.Button(text="Buscar", command = buscar)
 boton.place(x=110, y=175)
 ventana.resizable(0, 0)
 Label(ventana, text = "Nombre:", bg = "skyblue3").pack()
@@ -42,8 +53,8 @@ Label(ventana, text = "Dni:", bg = "skyblue3").pack()
 caja4 = Entry(ventana, bg = "light blue")
 caja4.pack()
 
-lista=["46502154", "47171797",]
-combo = ttk.Combobox(values=lista)
+lista=[]
+combo = ttk.Combobox(values=resp)
 combo.place(x=130, y=210)
 
 ventana.mainloop()
