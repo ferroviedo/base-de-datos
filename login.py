@@ -24,6 +24,16 @@ def buscar():
     resp = cur.fetchall()
     print(resp)
     
+    caja1.insert(0, resp[0][0])
+    caja2.insert(0, resp[0][1])
+    caja3.insert(0, resp[0][2])
+    caja4.insert(0, resp[0][3])
+    
+def borrar():
+    caja1.delete(0,END)
+    caja2.delete(0,END)
+    caja3.delete(0,END)
+    caja4.delete(0,END)
     
 bd = sqlite3.connect('login.bd')
 cur = bd.cursor()    
@@ -40,6 +50,8 @@ boton = ttk.Button(text="Guardar", command = escribir)
 boton.place(x=245, y=175)
 boton = ttk.Button(text="Buscar", command = buscar)
 boton.place(x=110, y=175)
+boton = ttk.Button(text="Borrar", command = borrar)
+boton.place(x=340, y=175)
 ventana.resizable(0, 0)
 Label(ventana, text = "Nombre:", bg = "skyblue3").pack()
 caja1 = Entry(ventana, bg = "lightblue")
